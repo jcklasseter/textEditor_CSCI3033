@@ -1,4 +1,4 @@
-package sample;
+package textEditor;
 
 public class Controller {
 }
