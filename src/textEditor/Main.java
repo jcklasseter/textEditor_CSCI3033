@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 public class Main extends Application {
 
     public static Stage primaryStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Main.primaryStage = primaryStage;
@@ -20,8 +21,6 @@ public class Main extends Application {
         GridPane page = loader.load();
 
         Controller cont = loader.getController();
-
-        //Parent root = FXMLLoader.load(getClass().getResource("textEditor.fxml"));
 
         primaryStage.setTitle("Simple Text Editor");
         primaryStage.setScene(new Scene(page, 600, 600));

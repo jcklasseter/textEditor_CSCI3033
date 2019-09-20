@@ -9,6 +9,8 @@
           alignment="center" maxHeight="Infinity" maxWidth="Infinity" >
     <children>
         <Button fx:id="saveButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="0" text="Save" mnemonicParsing="false" onAction="#saveTextView"/>
+        <Button fx:id="openButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="1" text="Open" mnemonicParsing="false" onAction="#openFileIntoTextView"/>
+
         <TextArea fx:id="textView" GridPane.vgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="0" text="This is a minimal prototype" />
     </children>
 </GridPane>
