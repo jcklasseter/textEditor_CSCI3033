@@ -5,6 +5,8 @@ package textEditor;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.*;
+import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
@@ -17,8 +19,29 @@ public class Controller {
     @FXML public TextArea textView;
     @FXML public Button   saveButton;
 
-    //TODO: Implement opening files and reading it into the textView
+    //Add the keyboard shortcuts to buttons
+    public void setup()
+    {
+        setupSaveButton();
+    }
 
+    //Save button keyboard shortcut
+    private void setupSaveButton() {
+        Scene scene = saveButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN);
+        saveButton.setText("Save (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        saveButton.fire();
+                    }
+                }
+        );
+    }
+
+    //TODO: Implement opening files and reading it into the textView
     public void saveTextView(ActionEvent actionEvent)
     {
         final FileChooser fc = new FileChooser();
