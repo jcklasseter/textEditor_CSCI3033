@@ -30,6 +30,7 @@ public class Controller {
         setupSaveButton();
         setupOpenButton();
         setupCopyButton();
+        setupPasteButton();
     }
 
     //Save button keyboard shortcut

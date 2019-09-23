@@ -12,6 +12,6 @@
         <Button fx:id="openButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="1" text="Open" mnemonicParsing="false" onAction="#openFileIntoTextView"/>
         <Button fx:id="copyButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="2" text="Copy" mnemonicParsing="false" onAction="#copyTextView"/>
         <Button fx:id="pasteButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="3" text="Paste" mnemonicParsing="false" onAction="#pasteText"/>
-        <TextArea fx:id="textView" GridPane.vgrow="ALWAYS" GridPane.columnSpan="2" GridPane.rowIndex="1" text="Hello, world!" />
+        <TextArea fx:id="textView" GridPane.vgrow="ALWAYS" GridPane.columnSpan="4" GridPane.rowIndex="1" text="Hello, world!" />
     </children>
 </GridPane>
