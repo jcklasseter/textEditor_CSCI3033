@@ -12,7 +12,8 @@ import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.control.Alert.AlertType;
 
 //Controller for textEditor.fxml
@@ -20,12 +21,15 @@ public class Controller {
     @FXML public TextArea textView;
     @FXML public Button   saveButton;
     @FXML public Button   openButton;
+    @FXML public Button   copyButton;
+    @FXML public Button   pasteButton;
 
     //Add the keyboard shortcuts to buttons
     public void setup()
     {
         setupSaveButton();
         setupOpenButton();
+        setupCopyButton();
     }
 
     //Save button keyboard shortcut
@@ -104,4 +108,47 @@ public class Controller {
         }
     }
     //   }
+
+    //Create the copy button
+    private void setupCopyButton(){
+        Scene scene = copyButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN);
+        copyButton.setText("Copy (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        copyButton.fire();
+                    }
+                }
+        );
+    }
+
+    //Create the paste button
+    private void setupPasteButton(){
+        Scene scene = pasteButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.SHORTCUT_DOWN);
+        pasteButton.setText("Copy (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        pasteButton.fire();
+                    }
+                }
+        );
+    }
+    //Todo implement the copy function
+    public void copyTextView(){
+
+    }
+
+    //Todo implement the paste function
+    public void pasteText(){
+
+    }
+
+
 }
