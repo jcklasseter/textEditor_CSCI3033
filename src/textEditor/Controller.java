@@ -23,6 +23,7 @@ public class Controller {
     @FXML public Button   openButton;
     @FXML public Button   copyButton;
     @FXML public Button   pasteButton;
+    @FXML public Button   cutButton;
 
     //Add the keyboard shortcuts to buttons
     public void setup()
@@ -31,6 +32,7 @@ public class Controller {
         setupOpenButton();
         setupCopyButton();
         setupPasteButton();
+        setupCutButton();
     }
 
     //Save button keyboard shortcut
@@ -141,13 +143,35 @@ public class Controller {
                 }
         );
     }
+
+    //Create the cut button
+    private void setupCutButton(){
+        Scene scene = cutButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.X, KeyCombination.SHORTCUT_DOWN);
+        cutButton.setText("Cut (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        cutButton.fire();
+                    }
+                }
+        );
+    }
+
     //Todo implement the copy function
-    public void copyTextView(){
+    public void copyTextView(ActionEvent actionEvent){
 
     }
 
     //Todo implement the paste function
-    public void pasteText(){
+    public void pasteText(ActionEvent actionEvent){
+
+    }
+
+    //Todo implement the cut function
+    public void cutText(ActionEvent actionEvent){
 
     }
 
