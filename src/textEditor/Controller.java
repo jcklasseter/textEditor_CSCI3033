@@ -66,8 +66,7 @@ public class Controller {
                 }
         );
     }
-
-    //TODO: Implement opening files and reading it into the textView
+    
     public void openFileIntoTextView(ActionEvent actionEvent)
     {
         try {
