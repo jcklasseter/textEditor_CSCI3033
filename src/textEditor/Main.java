@@ -1,5 +1,10 @@
 package textEditor;
 
+// Text editor demo project by
+// John Lasseter
+// Austin Leverette
+// Mike Crawford
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
