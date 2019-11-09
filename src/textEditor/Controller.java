@@ -52,6 +52,7 @@ public class Controller {
                     "  var editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" +
                     "    lineNumbers: true," +
                     "    matchBrackets: true," +
+                    "    indentUnit: 4," +
                     "    mode: \"text/x-java\"" +
                     "  });" +
                     "</script>" +
@@ -146,7 +147,6 @@ public class Controller {
             System.out.println("Error opening file " + file.getAbsoluteFile() + ": " + e.getMessage());
         }
     }
-    //   }
 
     //Create the copy button
     private void setupCopyButton(){
@@ -197,17 +197,20 @@ public class Controller {
     }
 
     //Todo implement the copy function
-    public void copyTextView(ActionEvent actionEvent){
+    public void copyText(ActionEvent actionEvent)
+    {
 
     }
 
     //Todo implement the paste function
-    public void pasteText(ActionEvent actionEvent){
+    public void pasteText(ActionEvent actionEvent)
+    {
 
     }
 
     //Todo implement the cut function
-    public void cutText(ActionEvent actionEvent){
+    public void cutText(ActionEvent actionEvent)
+    {
 
     }
 
