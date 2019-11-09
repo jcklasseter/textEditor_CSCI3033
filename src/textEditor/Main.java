@@ -14,7 +14,7 @@ public class Main extends Application {
     public static Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Main.primaryStage = primaryStage;
 
         FXMLLoader loader = new FXMLLoader(Controller.class.getResource("textEditor.fxml"));

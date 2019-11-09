@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.web.WebView?>
+
 <GridPane fx:controller="textEditor.Controller"
           xmlns:fx="http://javafx.com/fxml"
           alignment="center" maxHeight="Infinity" maxWidth="Infinity" >
@@ -13,6 +15,6 @@
         <Button fx:id="copyButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="2" text="Copy" mnemonicParsing="false" onAction="#copyTextView"/>
         <Button fx:id="pasteButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="3" text="Paste" mnemonicParsing="false" onAction="#pasteText"/>
         <Button fx:id="cutButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="4" text="Cut" mnemonicParsing="false" onAction="#cutText"/>
-        <TextArea fx:id="textView" GridPane.vgrow="ALWAYS" GridPane.columnSpan="5" GridPane.rowIndex="1" text="Hello, world!" />
+        <WebView fx:id="editor" GridPane.vgrow="ALWAYS" GridPane.columnSpan="5" GridPane.rowIndex="1"/>
     </children>
 </GridPane>

@@ -7,6 +7,8 @@ import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebView;
 import javafx.stage.*;
 import java.io.*;
 import java.nio.file.*;
@@ -24,6 +26,38 @@ public class Controller {
     @FXML public Button   copyButton;
     @FXML public Button   pasteButton;
     @FXML public Button   cutButton;
+    @FXML private WebView editor;
+
+    // Template for c-like languages from codemirror examples
+    private String initCode  =  "// HelloWorld.java\n\n" +
+            "public class HelloWorld\n" +
+            "{\n" +
+            "    public static void main(String[] args) {\n" +
+            "        System.out.println(\"Hello World!\");\n" +
+            "    }\n" +
+            "}\n";
+
+    private final String template =
+            "<!doctype html>" +
+                    "<html>" +
+                    "<head>" +
+                    "  <link rel=\"stylesheet\" href=\"http://codemirror.net/lib/codemirror.css\">" +
+                    "  <script src=\"http://codemirror.net/lib/codemirror.js\"></script>" +
+                    "  <script src=\"http://codemirror.net/mode/clike/clike.js\"></script>" +
+                    "</head>" +
+                    "<body>" +
+                    "<form><textarea id=\"code\" name=\"code\">\n" +
+                    "${code}" +
+                    "</textarea></form>" +
+                    "<script>" +
+                    "  var editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" +
+                    "    lineNumbers: true," +
+                    "    matchBrackets: true," +
+                    "    mode: \"text/x-java\"" +
+                    "  });" +
+                    "</script>" +
+                    "</body>" +
+                    "</html>";
 
     //Add the keyboard shortcuts to buttons
     public void setup()
@@ -33,6 +67,8 @@ public class Controller {
         setupCopyButton();
         setupPasteButton();
         setupCutButton();
+
+        editor.getEngine().loadContent(applyTemplate());
     }
 
     //Save button keyboard shortcut
@@ -66,7 +102,7 @@ public class Controller {
                 }
         );
     }
-    
+
     public void openFileIntoTextView(ActionEvent actionEvent)
     {
         try {
@@ -174,5 +210,8 @@ public class Controller {
 
     }
 
-
+    // applies the template to the editing code to create the html+javascript source
+    private String applyTemplate() {
+        return template.replace("${code}", initCode);
+    }
 }
