@@ -20,7 +20,6 @@ import javafx.scene.control.Alert.AlertType;
 
 //Controller for textEditor.fxml
 public class Controller {
-    @FXML public TextArea textView;
     @FXML public Button   saveButton;
     @FXML public Button   openButton;
     @FXML public Button   copyButton;
@@ -68,7 +67,7 @@ public class Controller {
         setupPasteButton();
         setupCutButton();
 
-        editor.getEngine().loadContent(applyTemplate());
+        applyTemplate(initCode);
     }
 
     //Save button keyboard shortcut
@@ -103,7 +102,7 @@ public class Controller {
         );
     }
 
-    public void openFileIntoTextView(ActionEvent actionEvent)
+    public void openFile(ActionEvent actionEvent)
     {
         try {
             final FileChooser fc = new FileChooser();
@@ -111,7 +110,7 @@ public class Controller {
             Path p = Paths.get(f.getAbsolutePath());
 
             try {
-                textView.setText(new String(Files.readAllBytes(p)));
+                applyTemplate(new String(Files.readAllBytes(p)));
             }
             catch (java.io.IOException e)
             {
@@ -123,7 +122,7 @@ public class Controller {
     }
 
     //Saves the contents of the text view to the
-    public void saveTextView(ActionEvent actionEvent)
+    public void saveEditor(ActionEvent actionEvent)
     {
         //Get where to save it
         final FileChooser fc = new FileChooser();
@@ -134,7 +133,9 @@ public class Controller {
         try {
             FileOutputStream out = new FileOutputStream(file);
             try {
-                out.write(textView.getText().getBytes());
+                String outS = getCode();
+                System.out.println(outS);
+                out.write(outS.getBytes());
                 out.close();
             } catch  (java.io.IOException e)
             {
@@ -210,8 +211,13 @@ public class Controller {
 
     }
 
-    // applies the template to the editing code to create the html+javascript source
-    private String applyTemplate() {
-        return template.replace("${code}", initCode);
+    // Applies the template to the editing code to create the html+javascript source
+    private void applyTemplate(String in) {
+        editor.getEngine().loadContent(template.replace("${code}", in));
+    }
+
+    // Returns the value of the code being edited through codemirror functions
+    private String getCode() {
+        return (String ) editor.getEngine().executeScript("editor.getValue();");
     }
 }
