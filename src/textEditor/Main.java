@@ -1,5 +1,10 @@
 package textEditor;
 
+// Text editor demo project by
+// John Lasseter
+// Austin Leverette
+// Mike Crawford
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
@@ -14,7 +19,7 @@ public class Main extends Application {
     public static Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Main.primaryStage = primaryStage;
 
         FXMLLoader loader = new FXMLLoader(Controller.class.getResource("textEditor.fxml"));

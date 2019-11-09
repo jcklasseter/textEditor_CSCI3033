@@ -7,6 +7,8 @@ import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebView;
 import javafx.stage.*;
 import java.io.*;
 import java.nio.file.*;
@@ -18,12 +20,44 @@ import javafx.scene.control.Alert.AlertType;
 
 //Controller for textEditor.fxml
 public class Controller {
-    @FXML public TextArea textView;
     @FXML public Button   saveButton;
     @FXML public Button   openButton;
     @FXML public Button   copyButton;
     @FXML public Button   pasteButton;
     @FXML public Button   cutButton;
+    @FXML private WebView editor;
+
+    // Template for c-like languages from codemirror examples
+    private String initCode  =  "// HelloWorld.java\n\n" +
+            "public class HelloWorld\n" +
+            "{\n" +
+            "    public static void main(String[] args) {\n" +
+            "        System.out.println(\"Hello World!\");\n" +
+            "    }\n" +
+            "}\n";
+
+    private final String template =
+            "<!doctype html>" +
+                    "<html>" +
+                    "<head>" +
+                    "  <link rel=\"stylesheet\" href=\"http://codemirror.net/lib/codemirror.css\">" +
+                    "  <script src=\"http://codemirror.net/lib/codemirror.js\"></script>" +
+                    "  <script src=\"http://codemirror.net/mode/clike/clike.js\"></script>" +
+                    "</head>" +
+                    "<body>" +
+                    "<form><textarea id=\"code\" name=\"code\">\n" +
+                    "${code}" +
+                    "</textarea></form>" +
+                    "<script>" +
+                    "  var editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" +
+                    "    lineNumbers: true," +
+                    "    matchBrackets: true," +
+                    "    indentUnit: 4," +
+                    "    mode: \"text/x-java\"" +
+                    "  });" +
+                    "</script>" +
+                    "</body>" +
+                    "</html>";
 
     //Add the keyboard shortcuts to buttons
     public void setup()
@@ -33,6 +67,8 @@ public class Controller {
         setupCopyButton();
         setupPasteButton();
         setupCutButton();
+
+        applyTemplate(initCode);
     }
 
     //Save button keyboard shortcut
@@ -66,8 +102,8 @@ public class Controller {
                 }
         );
     }
-    
-    public void openFileIntoTextView(ActionEvent actionEvent)
+
+    public void openFile(ActionEvent actionEvent)
     {
         try {
             final FileChooser fc = new FileChooser();
@@ -75,7 +111,7 @@ public class Controller {
             Path p = Paths.get(f.getAbsolutePath());
 
             try {
-                textView.setText(new String(Files.readAllBytes(p)));
+                applyTemplate(new String(Files.readAllBytes(p)));
             }
             catch (java.io.IOException e)
             {
@@ -87,7 +123,7 @@ public class Controller {
     }
 
     //Saves the contents of the text view to the
-    public void saveTextView(ActionEvent actionEvent)
+    public void saveEditor(ActionEvent actionEvent)
     {
         //Get where to save it
         final FileChooser fc = new FileChooser();
@@ -98,7 +134,9 @@ public class Controller {
         try {
             FileOutputStream out = new FileOutputStream(file);
             try {
-                out.write(textView.getText().getBytes());
+                String outS = getCode();
+                System.out.println(outS);
+                out.write(outS.getBytes());
                 out.close();
             } catch  (java.io.IOException e)
             {
@@ -109,7 +147,6 @@ public class Controller {
             System.out.println("Error opening file " + file.getAbsoluteFile() + ": " + e.getMessage());
         }
     }
-    //   }
 
     //Create the copy button
     private void setupCopyButton(){
@@ -160,19 +197,30 @@ public class Controller {
     }
 
     //Todo implement the copy function
-    public void copyTextView(ActionEvent actionEvent){
+    public void copyText(ActionEvent actionEvent)
+    {
 
     }
 
     //Todo implement the paste function
-    public void pasteText(ActionEvent actionEvent){
+    public void pasteText(ActionEvent actionEvent)
+    {
 
     }
 
     //Todo implement the cut function
-    public void cutText(ActionEvent actionEvent){
+    public void cutText(ActionEvent actionEvent)
+    {
 
     }
 
+    // Applies the template to the editing code to create the html+javascript source
+    private void applyTemplate(String in) {
+        editor.getEngine().loadContent(template.replace("${code}", in));
+    }
 
+    // Returns the value of the code being edited through codemirror functions
+    private String getCode() {
+        return (String ) editor.getEngine().executeScript("editor.getValue();");
+    }
 }

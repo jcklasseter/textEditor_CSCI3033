@@ -4,15 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.web.WebView?>
+
 <GridPane fx:controller="textEditor.Controller"
           xmlns:fx="http://javafx.com/fxml"
           alignment="center" maxHeight="Infinity" maxWidth="Infinity" >
     <children>
-        <Button fx:id="saveButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="0" text="Save" mnemonicParsing="false" onAction="#saveTextView"/>
-        <Button fx:id="openButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="1" text="Open" mnemonicParsing="false" onAction="#openFileIntoTextView"/>
-        <Button fx:id="copyButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="2" text="Copy" mnemonicParsing="false" onAction="#copyTextView"/>
+        <Button fx:id="saveButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="0" text="Save" mnemonicParsing="false" onAction="#saveEditor"/>
+        <Button fx:id="openButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="1" text="Open" mnemonicParsing="false" onAction="#openFile"/>
+        <Button fx:id="copyButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="2" text="Copy" mnemonicParsing="false" onAction="#copyText"/>
         <Button fx:id="pasteButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="3" text="Paste" mnemonicParsing="false" onAction="#pasteText"/>
         <Button fx:id="cutButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="4" text="Cut" mnemonicParsing="false" onAction="#cutText"/>
-        <TextArea fx:id="textView" GridPane.vgrow="ALWAYS" GridPane.columnSpan="5" GridPane.rowIndex="1" text="Hello, world!" />
+        <WebView fx:id="editor" GridPane.vgrow="ALWAYS" GridPane.columnSpan="5" GridPane.rowIndex="1"/>
     </children>
 </GridPane>
