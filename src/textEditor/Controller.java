@@ -6,6 +6,9 @@ import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.layout.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
@@ -26,7 +29,25 @@ public class Controller {
     @FXML public Button   pasteButton;
     @FXML public Button   cutButton;
     @FXML private WebView editor;
+    @FXML public TabPane tabpane;
 
+    Tab newtab = new Tab();
+    private void setupTabPane(){
+        Tab tab = new Tab("New Text");
+        tab.setContent(editor);
+
+        tabpane.getTabs().addAll(tab, newtab);
+
+        Scene scene = tabpane.getScene();
+    }
+
+    public void createTab(ActionEvent actionEvent){
+        Tab selectedTab = tabpane.getSelectionModel().getSelectedItem();
+        if(selectedTab == newtab){
+            Tab tab = new Tab("New Txt");
+
+        }
+    }
     // Template for c-like languages from codemirror examples
     private String initCode  =  "// HelloWorld.java\n\n" +
             "public class HelloWorld\n" +
@@ -67,7 +88,7 @@ public class Controller {
         setupCopyButton();
         setupPasteButton();
         setupCutButton();
-
+        setupTabPane();
         applyTemplate(initCode);
     }
 
@@ -110,6 +131,9 @@ public class Controller {
             File f = fc.showOpenDialog(null);
             Path p = Paths.get(f.getAbsolutePath());
 
+            Tab tab = new Tab(f.getName());
+            tab.setContent(editor);
+            tabpane.getTabs().add(tab);
             try {
                 applyTemplate(new String(Files.readAllBytes(p)));
             }
@@ -121,6 +145,7 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
 
     //Saves the contents of the text view to the
     public void saveEditor(ActionEvent actionEvent)

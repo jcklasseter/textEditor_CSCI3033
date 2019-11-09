@@ -7,6 +7,7 @@ package textEditor;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +28,8 @@ public class Main extends Application {
 
         Controller cont = loader.getController();
 
-        primaryStage.setTitle("Simple Text Editor");
+        primaryStage.setTitle("SIMPLE");
+        primaryStage.getIcons().add(new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTOTeCYUxl__kw8XLjhmCYSdZxDN-J2GYm1Oo8DMWb1m5CjEz4D"));
         primaryStage.setScene(new Scene(page, 600, 600));
 
         cont.setup(); //Connects the keyboard shortcuts
