@@ -31,8 +31,6 @@ public class Controller {
     @FXML public Button   cutButton;
     @FXML public TabPane tabpane;
 
-    private Vector<WebView> editorViews = new Vector<WebView>();
-
     Tab newtab = new Tab();
     private void setupTabPane(){
         Tab tab = new Tab("New Text");
