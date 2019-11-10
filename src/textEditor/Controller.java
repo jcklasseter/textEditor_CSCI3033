@@ -26,10 +26,11 @@ import javafx.scene.control.Alert.AlertType;
 public class Controller {
     @FXML public Button   saveButton;
     @FXML public Button   openButton;
-    @FXML public Button   copyButton;
-    @FXML public Button   pasteButton;
-    @FXML public Button   cutButton;
+     public Button   copyButton;
+     public Button   pasteButton;
+     public Button   cutButton;
     @FXML public TabPane tabpane;
+    @FXML public GridPane mainGridPane;
 
     Tab newtab = new Tab();
     private void setupTabPane(){
@@ -85,10 +86,14 @@ public class Controller {
     {
         setupSaveButton();
         setupOpenButton();
-        setupCopyButton();
-        setupPasteButton();
-        setupCutButton();
+//        setupCopyButton();
+//        setupPasteButton();
+//        setupCutButton();
         setupTabPane();
+
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(50);
+        mainGridPane.getColumnConstraints().add(column1);
     }
 
     //Save button keyboard shortcut
