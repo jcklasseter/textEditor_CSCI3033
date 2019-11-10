@@ -15,7 +15,6 @@
         <Button fx:id="copyButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="2" text="Copy" mnemonicParsing="false" onAction="#copyText"/>
         <Button fx:id="pasteButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="3" text="Paste" mnemonicParsing="false" onAction="#pasteText"/>
         <Button fx:id="cutButton" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="4" text="Cut" mnemonicParsing="false" onAction="#cutText"/>
-        <WebView fx:id="editor" GridPane.vgrow="ALWAYS" GridPane.columnSpan="5" GridPane.rowIndex="2"/>
-        <TabPane fx:id="tabpane" GridPane.fillHeight="" GridPane.rowIndex = "1" GridPane.columnSpan="5"/>
+        <TabPane fx:id="tabpane" GridPane.vgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex = "1" GridPane.columnSpan="5"/>
     </children>
 </GridPane>

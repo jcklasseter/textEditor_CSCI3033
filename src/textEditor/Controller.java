@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.*;
 import java.io.*;
+import java.util.Vector;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -28,17 +29,18 @@ public class Controller {
     @FXML public Button   copyButton;
     @FXML public Button   pasteButton;
     @FXML public Button   cutButton;
-    @FXML private WebView editor;
     @FXML public TabPane tabpane;
+
+    private Vector<WebView> editorViews = new Vector<WebView>();
 
     Tab newtab = new Tab();
     private void setupTabPane(){
         Tab tab = new Tab("New Text");
-        tab.setContent(editor);
+        WebView w = new WebView();
+        applyTemplate(w, initCode);
+        tab.setContent(w);
 
-        tabpane.getTabs().addAll(tab, newtab);
-
-        Scene scene = tabpane.getScene();
+        tabpane.getTabs().addAll(tab);
     }
 
     public void createTab(ActionEvent actionEvent){
@@ -89,7 +91,6 @@ public class Controller {
         setupPasteButton();
         setupCutButton();
         setupTabPane();
-        applyTemplate(initCode);
     }
 
     //Save button keyboard shortcut
@@ -132,10 +133,15 @@ public class Controller {
             Path p = Paths.get(f.getAbsolutePath());
 
             Tab tab = new Tab(f.getName());
-            tab.setContent(editor);
-            tabpane.getTabs().add(tab);
+
+            // We need to create a new webview, as each view belongs to an individual tab
             try {
-                applyTemplate(new String(Files.readAllBytes(p)));
+                WebView w = new WebView();
+
+                applyTemplate(w, new String(Files.readAllBytes(p)));
+
+                tab.setContent(w);
+                tabpane.getTabs().add(tab);
             }
             catch (java.io.IOException e)
             {
@@ -240,12 +246,13 @@ public class Controller {
     }
 
     // Applies the template to the editing code to create the html+javascript source
-    private void applyTemplate(String in) {
-        editor.getEngine().loadContent(template.replace("${code}", in));
+    private void applyTemplate(WebView w, String in) {
+        w.getEngine().loadContent(template.replace("${code}", in));
     }
 
     // Returns the value of the code being edited through codemirror functions
+    // Gets code from active tab
     private String getCode() {
-        return (String ) editor.getEngine().executeScript("editor.getValue();");
+        return (String ) ((WebView)tabpane.getSelectionModel().getSelectedItem().getContent()).getEngine().executeScript("editor.getValue();");
     }
 }
