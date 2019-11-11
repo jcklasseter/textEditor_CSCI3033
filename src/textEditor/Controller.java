@@ -37,6 +37,7 @@ public class Controller {
     // public Button   cutButton;
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
+    @FXML public WebView w;
 
     Tab newtab = new Tab();
     private void setupTabPane(){
