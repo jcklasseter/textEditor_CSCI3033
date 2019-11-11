@@ -69,7 +69,7 @@ public class Controller {
                 }
             };
 
-    
+
     // Template for c-like languages from codemirror examples
     private String initCode  =  "// HelloWorld.java\n\n" +
             "public class HelloWorld\n" +
@@ -165,7 +165,7 @@ public class Controller {
                 applyTemplate(w, new String(Files.readAllBytes(p)));
 
                 tab.setContent(w);
-                tabpane.getTabs().add(tab);
+                tabpane.getTabs().add(tabpane.getTabs().size() - 1, tab);
             }
             catch (java.io.IOException e)
             {
