@@ -32,22 +32,46 @@ public class Controller {
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
 
-    Tab newtab = new Tab();
+    Tab newtab = new Tab("+");
+
     private void setupTabPane(){
         Tab tab = new Tab("New Text");
         WebView w = new WebView();
         applyTemplate(w, initCode);
         tab.setContent(w);
 
-        tabpane.getTabs().addAll(tab);
+        newtab.setOnSelectionChanged(event);
+        tabpane.getTabs().addAll(tab,newtab);
     }
 
-    public void createTab(ActionEvent actionEvent){
-        Tab selectedTab = tabpane.getSelectionModel().getSelectedItem();
-        if(selectedTab == newtab){
-            Tab tab = new Tab("New Txt");
+    EventHandler<Event> event =
+            new EventHandler<Event>() {
 
-        }
+                public void handle(Event e)
+                {
+                    if (newtab.isSelected())
+                    {
+
+                        // create Tab
+                        WebView w = new WebView();
+                        applyTemplate(w,initCode);
+                        Tab tab = new Tab("New Text");
+                        tab.setContent(w);
+
+                        // add tab
+                        tabpane.getTabs().add(
+                                tabpane.getTabs().size() - 1, tab);
+
+                        // select the last tab
+                        tabpane.getSelectionModel().select(
+                                tabpane.getTabs().size() - 2);
+                    }
+                }
+            };
+
+    public void createTab(ActionEvent actionEvent){
+
+
     }
     // Template for c-like languages from codemirror examples
     private String initCode  =  "// HelloWorld.java\n\n" +
