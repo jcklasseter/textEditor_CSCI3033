@@ -69,10 +69,7 @@ public class Controller {
                 }
             };
 
-    public void createTab(ActionEvent actionEvent){
-
-
-    }
+    
     // Template for c-like languages from codemirror examples
     private String initCode  =  "// HelloWorld.java\n\n" +
             "public class HelloWorld\n" +
