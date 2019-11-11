@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 import javafx.stage.*;
 import java.io.*;
 import java.util.Vector;
@@ -21,14 +22,19 @@ import java.util.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 
 //Controller for textEditor.fxml
 public class Controller {
     @FXML public Button   saveButton;
     @FXML public Button   openButton;
-     public Button   copyButton;
-     public Button   pasteButton;
-     public Button   cutButton;
+    @FXML public Button decFontButton;
+    @FXML public Button incFontButton;
+    @FXML public Button printButton;
+    // public Button   copyButton;
+    // public Button   pasteButton;
+    // public Button   cutButton;
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
 
@@ -90,6 +96,9 @@ public class Controller {
 //        setupPasteButton();
 //        setupCutButton();
         setupTabPane();
+        setupIncFontButton();
+        setupDecFontButton();
+        setupPrintButton();
 
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(50);
@@ -114,7 +123,7 @@ public class Controller {
 
     //Open button keyboard shortcut
     private void setupOpenButton() {
-        Scene scene = saveButton.getScene();
+        Scene scene = openButton.getScene();
 
         KeyCodeCombination kc = new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN);
         openButton.setText("Open (" + kc.getDisplayText() + ")");
@@ -127,7 +136,52 @@ public class Controller {
                 }
         );
     }
+    //setup decrease font button
+    private void setupDecFontButton() {
+        Scene scene = decFontButton.getScene();
 
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.D, KeyCombination.SHORTCUT_DOWN);
+        decFontButton.setText("Font -- (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        decFontButton.fire();
+                    }
+                }
+        );
+    }
+    //setup increase font button
+    private void setupIncFontButton() {
+        Scene scene = incFontButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.I, KeyCombination.SHORTCUT_DOWN);
+        incFontButton.setText("Font ++ (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        incFontButton.fire();
+                    }
+                }
+        );
+    }
+    //setup print button
+    private void setupPrintButton() {
+        Scene scene = printButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN);
+        printButton.setText("Print (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        printButton.fire();
+                    }
+                }
+        );
+    }
+    
     public void openFile(ActionEvent actionEvent)
     {
         try {
@@ -230,6 +284,30 @@ public class Controller {
         );
     }
 
+    public void incFont(ActionEvent actionEvent, WebView w)
+    {
+        w.setFontScale(1.10);
+    }
+    
+    public void decFont(ActionEvent actionEvent, WebView w)
+    {
+        w.setFontScale(0.90);
+    }
+    
+    public void printFile(ActionEvent actionEvent, WebView w)
+    {
+        WebEngine file = w.getEngine();
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null){
+            file.print(job);
+            job.endJob();
+        }
+    }
+        
+    
+    
+    
+    
     //Todo implement the copy function
     public void copyText(ActionEvent actionEvent)
     {
