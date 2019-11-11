@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 
+import java.io.FileInputStream;
+
 public class Main extends Application {
 
     public static Stage primaryStage;
@@ -28,8 +30,8 @@ public class Main extends Application {
 
         Controller cont = loader.getController();
 
-        primaryStage.setTitle("SIMPLE");
-        primaryStage.getIcons().add(new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTOTeCYUxl__kw8XLjhmCYSdZxDN-J2GYm1Oo8DMWb1m5CjEz4D"));
+        primaryStage.setTitle("SIMPLE PLUS");
+        primaryStage.getIcons().add(new Image(new FileInputStream("C:\\Users\\etter\\IdeaProjects\\textEditor_CSCI3033\\src\\iconsflow\\icon1.png")));
         primaryStage.setScene(new Scene(page, 600, 600));
 
         cont.setup(); //Connects the keyboard shortcuts
