@@ -1,0 +1,18 @@
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.web.WebView?>
+
+<GridPane fx:controller="textEditor.Controller"
+          fx:id="mainGridPane"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="center" maxHeight="Infinity" maxWidth="Infinity" >
+    <children>
+        <Button fx:id="saveButton"  GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="0" text="Save" mnemonicParsing="false" onAction="#saveEditor"/>
+        <Button fx:id="openButton"  GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="1" text="Open" mnemonicParsing="false" onAction="#openFile"/>
+        <TabPane fx:id="tabpane" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex = "1" GridPane.columnSpan="2"/>
+    </children>
+</GridPane>
