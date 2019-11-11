@@ -31,7 +31,8 @@ public class Main extends Application {
         Controller cont = loader.getController();
 
         primaryStage.setTitle("SIMPLE PLUS");
-        primaryStage.getIcons().add(new Image(new FileInputStream("..\\textEditor_CSCI3033\\src\\iconsflow\\icon1.png")));
+        //primaryStage.getIcons().add(new Image(new FileInputStream("..\\textEditor_CSCI3033\\src\\iconsflow\\icon1.png")));
+        primaryStage.getIcons().add(new Image(new FileInputStream("/Users/a7c/IdeaProjects/simpleTextEditorMaster/src/iconsflow/icon1.png")));
         primaryStage.setScene(new Scene(page, 600, 600));
 
         cont.setup(); //Connects the keyboard shortcuts
