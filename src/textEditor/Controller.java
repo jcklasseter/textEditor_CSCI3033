@@ -298,7 +298,7 @@ public class Controller {
     private void applyTemplate(WebView w, String in) {
         List<String> lines = Arrays.asList(template.replace("${code}", in));
         Path file = Paths.get("temp.html").toAbsolutePath();
-        Path f2 = Paths.get("/Users/a7c/IdeaProjects/simpleTextEditorMaster/out/production/textEditor_CSCI3033/temp.html");
+        Path f2 = Paths.get("C:\\Users\\etter\\IdeaProjects\\textEditor_CSCI3033\\out\\production\\textEditor_CSCI3033temp.html");
 
         try {
             Files.write(file, lines, StandardCharsets.UTF_8);
