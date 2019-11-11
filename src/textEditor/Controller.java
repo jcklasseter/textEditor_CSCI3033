@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.*;
 import java.io.*;
+import java.net.URL;
 import java.util.Vector;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
@@ -80,6 +81,29 @@ public class Controller {
             "}\n";
 
     private final String template =
+            "<!doctype html>" +
+                    "<html>" +
+                    "<head>" +
+                    "  <link rel=\"stylesheet\" href=\"/opt/local/lib/node_modules/codemirror/lib/codemirror.css\">" +
+                    "  <script src=\"/opt/local/lib/node_modules/codemirror/lib/codemirror.js\"></script>" +
+                    "  <script src=\"/opt/local/lib/node_modules/codemirror/mode/clike/clike.js\"></script>" +
+                    "</head>" +
+                    "<body>" +
+                    "<form><textarea id=\"code\" name=\"code\">\n" +
+                    "${code}" +
+                    "</textarea></form>" +
+                    "<script>" +
+                    "  var editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" +
+                    "    lineNumbers: true," +
+                    "    matchBrackets: true," +
+                    "    indentUnit: 4," +
+                    "    mode: \"text/x-java\"" +
+                    "  });" +
+                    "</script>" +
+                    "</body>" +
+                    "</html>";
+
+    private final String onlineTemplate =
             "<!doctype html>" +
                     "<html>" +
                     "<head>" +
@@ -162,7 +186,8 @@ public class Controller {
             try {
                 WebView w = new WebView();
 
-                applyTemplate(w, new String(Files.readAllBytes(p)));
+                String toWrite = new String(Files.readAllBytes(p));
+                applyTemplate(w, toWrite);
 
                 tab.setContent(w);
                 tabpane.getTabs().add(tabpane.getTabs().size() - 1, tab);
@@ -271,9 +296,29 @@ public class Controller {
 
     // Applies the template to the editing code to create the html+javascript source
     private void applyTemplate(WebView w, String in) {
-        w.getEngine().loadContent(template.replace("${code}", in));
-    }
+        List<String> lines = Arrays.asList(template.replace("${code}", in));
+        Path file = Paths.get("temp.html").toAbsolutePath();
+        Path f2 = Paths.get("/Users/a7c/IdeaProjects/simpleTextEditorMaster/out/production/textEditor_CSCI3033/temp.html");
 
+        try {
+            Files.write(file, lines, StandardCharsets.UTF_8);
+            Files.write(f2, lines, StandardCharsets.UTF_8);
+
+            URL u = getClass().getResource("/temp.html");
+
+            // Can be null if resources not set correctly, so fallback to online
+            if (u != null) {
+                System.out.println("Using offline template");
+                w.getEngine().load(u.toExternalForm());
+            }
+            else {
+                System.out.println("Using online template");
+                w.getEngine().loadContent(onlineTemplate.replace("${code}", in));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     // Returns the value of the code being edited through codemirror functions
     // Gets code from active tab
     private String getCode() {
