@@ -33,7 +33,7 @@ public class Controller {
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
 
-    Tab newtab = new Tab("+");
+    private Tab newtab = new Tab("+");
 
     private void setupTabPane(){
         Tab tab = new Tab("New Text");
