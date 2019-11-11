@@ -307,7 +307,7 @@ public class Controller {
             URL u = getClass().getResource("/temp.html");
 
             // Can be null if resources not set correctly, so fallback to online
-            if (u != null || !Files.exists(Paths.get("/opt/local/lib/node_modules/codemirror/lib/codemirror.css"))) {
+            if (u != null && Files.exists(Paths.get("/opt/local/lib/node_modules/codemirror/lib/codemirror.css"))) {
                 System.out.println("Using offline template");
                 w.getEngine().load(u.toExternalForm());
             }
