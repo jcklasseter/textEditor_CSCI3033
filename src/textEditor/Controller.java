@@ -296,8 +296,11 @@ public class Controller {
     
     public void printFile(ActionEvent actionEvent, WebView w)
     {
+        Printer printer = Printer.getDefaultPrinter();
+        printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
         WebEngine file = w.getEngine();
-        PrinterJob job = PrinterJob.createPrinterJob();
+        PrinterJob job = PrinterJob.createPrinterJob(printer);
+        job.showPrintDialog(owner);
         if (job != null){
             file.print(job);
             job.endJob();
