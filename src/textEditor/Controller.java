@@ -1,6 +1,10 @@
 package textEditor;
 
 import javafx.fxml.FXML;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.*;
 import java.io.BufferedReader;
@@ -30,9 +34,9 @@ import javafx.scene.control.Alert.AlertType;
 public class Controller {
     @FXML public Button   saveButton;
     @FXML public Button   openButton;
-     public Button   copyButton;
-     public Button   pasteButton;
-     public Button   cutButton;
+    @FXML public Button   incFontButton;
+    @FXML public Button   decFontButton;
+    @FXML public Button   printButton;
      @FXML public Button compileButton;
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
@@ -269,53 +273,7 @@ public class Controller {
         }
     }
 
-    //Create the copy button
-    private void setupCopyButton(){
-        Scene scene = copyButton.getScene();
 
-        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN);
-        copyButton.setText("Copy (" + kc.getDisplayText() + ")");
-
-        scene.getAccelerators().put(kc ,
-                new Runnable() {
-                    @FXML public void run() {
-                        copyButton.fire();
-                    }
-                }
-        );
-    }
-
-    //Create the paste button
-    private void setupPasteButton(){
-        Scene scene = pasteButton.getScene();
-
-        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.SHORTCUT_DOWN);
-        pasteButton.setText("Copy (" + kc.getDisplayText() + ")");
-
-        scene.getAccelerators().put(kc ,
-                new Runnable() {
-                    @FXML public void run() {
-                        pasteButton.fire();
-                    }
-                }
-        );
-    }
-
-    //Create the cut button
-    private void setupCutButton(){
-        Scene scene = cutButton.getScene();
-
-        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.X, KeyCombination.SHORTCUT_DOWN);
-        cutButton.setText("Cut (" + kc.getDisplayText() + ")");
-
-        scene.getAccelerators().put(kc ,
-                new Runnable() {
-                    @FXML public void run() {
-                        cutButton.fire();
-                    }
-                }
-        );
-    }
 
       //setup decrease font button
     private void setupDecFontButton() {
@@ -379,15 +337,18 @@ public class Controller {
     
     public void printFile(ActionEvent actionEvent)
     {
+
         Printer printer = Printer.getDefaultPrinter();
         printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
         Tab pTab = tabpane.getSelectionModel().getSelectedItem();
         WebView file = (WebView) pTab.getContent();
         PrinterJob job = PrinterJob.createPrinterJob(printer);
-        job.showPrintDialog(owner);
+
+
         if (job != null){
-            file.print(job);
-            job.endJob();
+            boolean success = job.printPage(file);
+            if(success)
+                job.endJob();
         }
     }
         
