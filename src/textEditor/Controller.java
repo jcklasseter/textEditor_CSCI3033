@@ -64,9 +64,9 @@ public class Controller {
             Runtime rt = Runtime.getRuntime();
 
             rt.exec("cmd /c start cmd.exe /K \" javac \"" + command);
-            System.out.println("success1");
+
             rt.exec("cmd /c start cmd.exe /K \" java \"" + newCommand);
-            System.out.println("success2");
+
         }catch(Exception e){
             System.out.print("error");
         }
