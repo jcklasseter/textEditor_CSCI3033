@@ -317,6 +317,80 @@ public class Controller {
         );
     }
 
+      //setup decrease font button
+    private void setupDecFontButton() {
+        Scene scene = decFontButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.D, KeyCombination.SHORTCUT_DOWN);
+        decFontButton.setText("Font -- (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        decFontButton.fire();
+                    }
+                }
+        );
+    }
+    //setup increase font button
+    private void setupIncFontButton() {
+        Scene scene = incFontButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.I, KeyCombination.SHORTCUT_DOWN);
+        incFontButton.setText("Font ++ (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        incFontButton.fire();
+                    }
+                }
+        );
+    }
+    //setup print button
+    private void setupPrintButton() {
+        Scene scene = printButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.P, KeyCombination.SHORTCUT_DOWN);
+        printButton.setText("Print (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        printButton.fire();
+                    }
+                }
+        );
+    }
+    
+     public void incFont(ActionEvent actionEvent)
+    {
+        Tab incTab = tabpane.getSelectionModel().getSelectedItem();
+        WebView myWeb = (WebView) incTab.getContent();
+        myWeb.setFontScale(1.10);
+    }
+    
+    public void decFont(ActionEvent actionEvent)
+    {
+       Tab decTab = tabpane.getSelectionModel().getSelectedItem();
+       WebView myWeb = (WebView) decTab.getContent();
+       myWeb.setFontScale(0.90);
+    }
+    
+    public void printFile(ActionEvent actionEvent)
+    {
+        Printer printer = Printer.getDefaultPrinter();
+        printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
+        Tab pTab = tabpane.getSelectionModel().getSelectedItem();
+        WebView file = (WebView) pTab.getContent();
+        PrinterJob job = PrinterJob.createPrinterJob(printer);
+        job.showPrintDialog(owner);
+        if (job != null){
+            file.print(job);
+            job.endJob();
+        }
+    }
+        
     //Todo implement the copy function
     public void copyText(ActionEvent actionEvent)
     {
