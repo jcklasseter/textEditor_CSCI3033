@@ -37,7 +37,7 @@ public class Controller {
     // public Button   cutButton;
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
-    @FXML public WebView w;
+    
 
     Tab newtab = new Tab();
     private void setupTabPane(){
@@ -285,21 +285,26 @@ public class Controller {
         );
     }
 
-    public void incFont(ActionEvent actionEvent, WebView w)
+    public void incFont(ActionEvent actionEvent)
     {
-        w.setFontScale(1.10);
+        Tab incTab = tabpane.getSelectionModel().getSelectedItem();
+        Webview myWeb = (WebView) incTab.getContent();
+        myWeb.setFontScale(1.10);
     }
     
-    public void decFont(ActionEvent actionEvent, WebView w)
+    public void decFont(ActionEvent actionEvent)
     {
-        w.setFontScale(0.90);
+       Tab decTab = tabpane.getSelectionModel().getSelectedItem();
+       Webview myWeb = (WebView) decTab.getContent();
+       myWeb.setFontScale(0.90);
     }
     
-    public void printFile(ActionEvent actionEvent, WebView w)
+    public void printFile(ActionEvent actionEvent)
     {
         Printer printer = Printer.getDefaultPrinter();
         printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
-        WebEngine file = w.getEngine();
+        Tab pTab = tabpane.getSelectionModel().getSelectedItem();
+        Webview file = (WebView) pTab.getContent();
         PrinterJob job = PrinterJob.createPrinterJob(printer);
         job.showPrintDialog(owner);
         if (job != null){
@@ -311,24 +316,6 @@ public class Controller {
     
     
     
-    
-    //Todo implement the copy function
-    public void copyText(ActionEvent actionEvent)
-    {
-
-    }
-
-    //Todo implement the paste function
-    public void pasteText(ActionEvent actionEvent)
-    {
-
-    }
-
-    //Todo implement the cut function
-    public void cutText(ActionEvent actionEvent)
-    {
-
-    }
 
     // Applies the template to the editing code to create the html+javascript source
     private void applyTemplate(WebView w, String in) {
