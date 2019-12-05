@@ -24,6 +24,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 //Controller for textEditor.fxml
 public class Controller {
