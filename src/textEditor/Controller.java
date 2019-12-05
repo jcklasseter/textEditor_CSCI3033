@@ -366,14 +366,14 @@ public class Controller {
      public void incFont(ActionEvent actionEvent)
     {
         Tab incTab = tabpane.getSelectionModel().getSelectedItem();
-        Webview myWeb = (WebView) incTab.getContent();
+        WebView myWeb = (WebView) incTab.getContent();
         myWeb.setFontScale(1.10);
     }
     
     public void decFont(ActionEvent actionEvent)
     {
        Tab decTab = tabpane.getSelectionModel().getSelectedItem();
-       Webview myWeb = (WebView) decTab.getContent();
+       WebView myWeb = (WebView) decTab.getContent();
        myWeb.setFontScale(0.90);
     }
     
@@ -382,7 +382,7 @@ public class Controller {
         Printer printer = Printer.getDefaultPrinter();
         printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL);
         Tab pTab = tabpane.getSelectionModel().getSelectedItem();
-        Webview file = (WebView) pTab.getContent();
+        WebView file = (WebView) pTab.getContent();
         PrinterJob job = PrinterJob.createPrinterJob(printer);
         job.showPrintDialog(owner);
         if (job != null){
