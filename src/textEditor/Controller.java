@@ -3,6 +3,9 @@ package textEditor;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
@@ -30,12 +33,50 @@ public class Controller {
      public Button   copyButton;
      public Button   pasteButton;
      public Button   cutButton;
+     @FXML public Button compileButton;
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
+
+
+    private void setupCompile(){
+        Scene scene = compileButton.getScene();
+
+        KeyCodeCombination kc = new KeyCodeCombination(KeyCode.M, KeyCombination.SHORTCUT_DOWN);
+        compileButton.setText("Compile (" + kc.getDisplayText() + ")");
+
+        scene.getAccelerators().put(kc ,
+                new Runnable() {
+                    @FXML public void run() {
+                        compileButton.fire();
+                    }
+                }
+        );
+    }
+
+    public void compileCode(ActionEvent event){
+        try
+        {
+
+            Tab tab = tabpane.getSelectionModel().getSelectedItem();
+            String command = new String(tab.getText());
+            String newCommand = new String(tab.getText().replace(".java",""));
+
+            Runtime rt = Runtime.getRuntime();
+
+            rt.exec("cmd /c start cmd.exe /K \" javac \"" + command);
+            System.out.println("success1");
+            rt.exec("cmd /c start cmd.exe /K \" java \"" + newCommand);
+            System.out.println("success2");
+        }catch(Exception e){
+            System.out.print("error");
+        }
+    }
+
 
     private Tab newtab = new Tab("+");
 
     private void setupTabPane(){
+
         Tab tab = new Tab("New Text");
         WebView w = new WebView();
         applyTemplate(w, initCode);
@@ -135,7 +176,7 @@ public class Controller {
 //        setupPasteButton();
 //        setupCutButton();
         setupTabPane();
-
+        setupCompile();
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(50);
         mainGridPane.getColumnConstraints().add(column1);
@@ -299,7 +340,7 @@ public class Controller {
         List<String> lines = Arrays.asList(template.replace("${code}", in));
         Path file = Paths.get("temp.html").toAbsolutePath();
         //Path f2 = Paths.get("C:\\Users\\etter\\IdeaProjects\\textEditor_CSCI3033\\out\\production\\textEditor_CSCI3033temp.html");
-        Path f2 = Paths.get("/Users/a7c/IdeaProjects/simpleTextEditorMaster/out/production/textEditor_CSCI3033/temp.html");
+        Path f2 = Paths.get("../textEditor_CSCI3033/temp.html");
 
         try {
             Files.write(file, lines, StandardCharsets.UTF_8);
