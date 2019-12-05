@@ -17,6 +17,6 @@
         <Button fx:id="incFontButton"  GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="3" text="Font ++" mnemonicParsing="false" onAction="#incFont"/>
         <Button fx:id="decFontButton"  GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="4" text="Font --" mnemonicParsing="false" onAction="#decFont"/>
         <Button fx:id="printButton"  GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="5" text="Print" mnemonicParsing="false" onAction="#printFile"/>
-        <TabPane fx:id="tabpane" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex = "1" GridPane.columnSpan="3"/>
+        <TabPane fx:id="tabpane" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex = "1" GridPane.columnSpan="6"/>
     </children>
 </GridPane>
