@@ -64,9 +64,43 @@ public class Controller {
     public void compileCode(ActionEvent event){
         try
         {
-            Tab tab = tabpane.getSelectionModel().getSelectedItem();
-            String command = new String(tab.getText());
-            String newCommand = new String(tab.getText().replace(".java",""));
+            String name = tabpane.getSelectionModel().getSelectedItem().getText() + ".java";
+
+            String contents = getCode();
+
+            Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name), "utf-8"));
+            writer.write(contents);
+            writer.close();
+
+            String cmd = "/usr/bin/javac";
+            String arg =  FileSystems.getDefault().getPath("").toAbsolutePath() + "/" + name ;
+            System.out.println("Trying to execute string: " + cmd + " " + arg);
+            Process p = Runtime.getRuntime().exec(new String[] {cmd, arg});
+            p.waitFor();
+
+            System.out.println("");
+            System.out.println("Outputs: ");
+            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while (true) {
+                line = r.readLine();
+                if (line == null) { break; }
+                System.out.println(line);
+            }
+
+            System.out.println("");
+            System.out.println("Errors: ");
+            r = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            while (true) {
+                line = r.readLine();
+                if (line == null) { break; }
+                System.out.println(line);
+            }
+
+            System.out.println("");
+            System.out.println("Exit code:" + p.exitValue());
+
 
             //Runtime rt = Runtime.getRuntime();
 
@@ -75,7 +109,7 @@ public class Controller {
             //rt.exec("cmd /c start cmd.exe /K \" java \"" + newCommand);
 
         }catch(Exception e){
-            System.out.print("error");
+            System.out.print("error: " + e);
         }
     }
 
@@ -84,7 +118,7 @@ public class Controller {
 
     private void setupTabPane(){
 
-        Tab tab = new Tab("New Text");
+        Tab tab = new Tab("HelloWorld");
         WebView w = new WebView();
         applyTemplate(w, initCode);
         tab.setContent(w);
@@ -357,25 +391,6 @@ public class Controller {
             }
             
         }
-    }
-        
-        
-    //Todo implement the copy function
-    public void copyText(ActionEvent actionEvent)
-    {
-
-    }
-
-    //Todo implement the paste function
-    public void pasteText(ActionEvent actionEvent)
-    {
-
-    }
-
-    //Todo implement the cut function
-    public void cutText(ActionEvent actionEvent)
-    {
-
     }
 
     // Applies the template to the editing code to create the html+javascript source
