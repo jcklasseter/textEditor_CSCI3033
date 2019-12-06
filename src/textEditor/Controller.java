@@ -21,6 +21,7 @@ import javafx.stage.*;
 import java.io.*;
 import java.net.URL;
 import java.util.Vector;
+import org.apache.commons.io.FilenameUtils;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -113,17 +114,94 @@ public class Controller {
             VBox dialogVbox = new VBox(20);
 
             Text t = new Text("File compilation results");
-
             Text res = new Text(results);
-
             dialogVbox.getChildren().add(t);
             dialogVbox.getChildren().add(res);
-            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+
+            //If compilation was successful, offer to run it
+            if (p.exitValue() == 0)
+            {
+                Button b = new Button();
+                b.setText("Run " + name.replace(".java", "") + "?");
+                b.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override public void handle(ActionEvent e) {
+                        runCompiledProgram(FilenameUtils.getBaseName(name));
+                    }
+                });
+                dialogVbox.getChildren().add(b);
+            }
+
+            Scene dialogScene = new Scene(dialogVbox, 400, 200);
             dialog.setScene(dialogScene);
             dialog.show();
 
         }catch(Exception e){
             System.out.print("error: " + e);
+        }
+    }
+
+    //Assumes we are already in the directory of the .class file
+    //Name fed must not be the path, but the basename
+    // /usr/bin/file1
+    //CWD should be /usr/bin/ already
+    //Name should be file1
+    public void runCompiledProgram(String name)
+    {
+        try {
+            String cmd = "/usr/bin/java";
+            System.out.println("Trying to execute java program: " + cmd + " " + name);
+            Process p = Runtime.getRuntime().exec(new String[]{cmd, name});
+            p.waitFor();
+
+            System.out.println("");
+            System.out.println("Outputs:");
+            String results = "Outputs:\n";
+            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while (true) {
+                line = r.readLine();
+                if (line == null) {
+                    break;
+                }
+                System.out.println(line);
+                results += line + "\n";
+            }
+
+            System.out.println("");
+            System.out.println("Errors: ");
+            results += "\nErrors:\n";
+            r = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            while (true) {
+                line = r.readLine();
+                if (line == null) {
+                    break;
+                }
+                System.out.println(line);
+                results += line + "\n";
+            }
+
+            System.out.println("");
+            System.out.println("Exit code:" + p.exitValue());
+            results += "\nExit code: " + p.exitValue();
+
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.NONE);
+            dialog.initOwner((Stage) saveButton.getScene().getWindow()); // Sets to main stage
+            VBox dialogVbox = new VBox(20);
+
+            Text t = new Text("Java execution results");
+            Text res = new Text(results);
+            dialogVbox.getChildren().add(t);
+            dialogVbox.getChildren().add(res);
+
+            Scene dialogScene = new Scene(dialogVbox, 300, 300);
+            dialog.setScene(dialogScene);
+            dialog.show();
+
+        } catch (Exception e)
+        {
+            System.out.println("Error: " + e);
         }
     }
 
