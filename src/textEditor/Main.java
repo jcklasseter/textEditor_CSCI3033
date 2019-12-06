@@ -32,7 +32,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("SIMPLE PLUS");
         primaryStage.getIcons().add(new Image(new FileInputStream("..\\textEditor_CSCI3033\\src\\iconsflow\\icon2.png")));
-        primaryStage.setScene(new Scene(page, 600, 600));
+        primaryStage.setScene(new Scene(page, 800, 600));
 
         cont.setup(); //Connects the keyboard shortcuts
         primaryStage.show();
