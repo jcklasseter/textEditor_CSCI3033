@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.*;
 import java.io.*;
@@ -79,34 +80,47 @@ public class Controller {
             p.waitFor();
 
             System.out.println("");
-            System.out.println("Outputs: ");
+            System.out.println("Outputs:");
+            String results = "Outputs:\n";
             BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
             while (true) {
                 line = r.readLine();
                 if (line == null) { break; }
                 System.out.println(line);
+                results += line + "\n";
             }
 
             System.out.println("");
             System.out.println("Errors: ");
+            results += "\nErrors:\n";
             r = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
             while (true) {
                 line = r.readLine();
                 if (line == null) { break; }
                 System.out.println(line);
+                results += line + "\n";
             }
 
             System.out.println("");
             System.out.println("Exit code:" + p.exitValue());
+            results += "\nExit code: " + p.exitValue();
 
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.NONE);
+            dialog.initOwner((Stage) saveButton.getScene().getWindow()); // Sets to main stage
+            VBox dialogVbox = new VBox(20);
 
-            //Runtime rt = Runtime.getRuntime();
+            Text t = new Text("File compilation results");
 
-            //rt.exec("cmd /c start cmd.exe /K \" javac \"" + command);
+            Text res = new Text(results);
 
-            //rt.exec("cmd /c start cmd.exe /K \" java \"" + newCommand);
+            dialogVbox.getChildren().add(t);
+            dialogVbox.getChildren().add(res);
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
 
         }catch(Exception e){
             System.out.print("error: " + e);
