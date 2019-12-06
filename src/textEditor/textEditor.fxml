@@ -18,5 +18,9 @@
         <Button fx:id="decFontButton"  GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="4" text="Font --" mnemonicParsing="false" onAction="#decFont"/>
         <Button fx:id="printButton"  GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex="0" GridPane.columnIndex="5" text="Print" mnemonicParsing="false" onAction="#printFile"/>
         <TabPane fx:id="tabpane" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex = "1" GridPane.columnSpan="6"/>
+        <Text GridPane.columnIndex="0" GridPane.rowIndex="2" text="Compiler:"/>
+        <TextField fx:id="compilerField" text="/usr/bin/javac" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex = "2" GridPane.columnIndex="1" GridPane.columnSpan="5"/>
+        <Text GridPane.columnIndex="0" GridPane.rowIndex="3" text="Java:"/>
+        <TextField fx:id="javaField" text="/usr/bin/java" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" GridPane.fillHeight="" GridPane.rowIndex = "3" GridPane.columnIndex="1" GridPane.columnSpan="5"/>
     </children>
 </GridPane>

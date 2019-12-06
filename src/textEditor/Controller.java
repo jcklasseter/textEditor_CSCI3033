@@ -2,6 +2,7 @@ package textEditor;
 
 import java.lang.Math;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.*;
 import java.io.BufferedReader;
@@ -46,7 +47,8 @@ public class Controller {
      @FXML public Button compileButton;
     @FXML public TabPane tabpane;
     @FXML public GridPane mainGridPane;
-
+    @FXML public TextField compilerField;
+    @FXML public TextField javaField;
 
     private void setupCompile(){
         Scene scene = compileButton.getScene();
@@ -74,7 +76,7 @@ public class Controller {
             writer.write(contents);
             writer.close();
 
-            String cmd = "/usr/bin/javac";
+            String cmd = compilerField.getText();
             String arg =  FileSystems.getDefault().getPath("").toAbsolutePath() + "/" + name ;
             System.out.println("Trying to execute string: " + cmd + " " + arg);
             Process p = Runtime.getRuntime().exec(new String[] {cmd, arg});
@@ -150,7 +152,7 @@ public class Controller {
     public void runCompiledProgram(String name)
     {
         try {
-            String cmd = "/usr/bin/java";
+            String cmd = javaField.getText();
             System.out.println("Trying to execute java program: " + cmd + " " + name);
             Process p = Runtime.getRuntime().exec(new String[]{cmd, name});
             p.waitFor();
@@ -310,14 +312,8 @@ public class Controller {
     {
         setupSaveButton();
         setupOpenButton();
-//        setupCopyButton();
-//        setupPasteButton();
-//        setupCutButton();
         setupTabPane();
         setupCompile();
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(50);
-        mainGridPane.getColumnConstraints().add(column1);
     }
 
     //Save button keyboard shortcut
