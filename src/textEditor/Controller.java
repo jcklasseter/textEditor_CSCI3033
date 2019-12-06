@@ -108,6 +108,7 @@ public class Controller {
             System.out.println("Exit code:" + p.exitValue());
             results += "\nExit code: " + p.exitValue();
 
+            ScrollPane sa = new ScrollPane();
             final Stage dialog = new Stage();
             dialog.initModality(Modality.NONE);
             dialog.initOwner((Stage) saveButton.getScene().getWindow()); // Sets to main stage
@@ -130,8 +131,9 @@ public class Controller {
                 });
                 dialogVbox.getChildren().add(b);
             }
+            sa.setContent(dialogVbox);
 
-            Scene dialogScene = new Scene(dialogVbox, 400, 200);
+            Scene dialogScene = new Scene(sa, 400, 200);
             dialog.setScene(dialogScene);
             dialog.show();
 
@@ -185,6 +187,7 @@ public class Controller {
             System.out.println("Exit code:" + p.exitValue());
             results += "\nExit code: " + p.exitValue();
 
+            ScrollPane sa = new ScrollPane();
             final Stage dialog = new Stage();
             dialog.initModality(Modality.NONE);
             dialog.initOwner((Stage) saveButton.getScene().getWindow()); // Sets to main stage
@@ -192,10 +195,12 @@ public class Controller {
 
             Text t = new Text("Java execution results");
             Text res = new Text(results);
+
             dialogVbox.getChildren().add(t);
             dialogVbox.getChildren().add(res);
+            sa.setContent(dialogVbox);
 
-            Scene dialogScene = new Scene(dialogVbox, 300, 300);
+            Scene dialogScene = new Scene(sa, 300, 300);
             dialog.setScene(dialogScene);
             dialog.show();
 
