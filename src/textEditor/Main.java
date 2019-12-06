@@ -16,6 +16,10 @@ import javafx.scene.input.*;
 import javafx.scene.control.*;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 
 public class Main extends Application {
 
@@ -31,7 +35,14 @@ public class Main extends Application {
         Controller cont = loader.getController();
 
         primaryStage.setTitle("SIMPLE PLUS");
-        primaryStage.getIcons().add(new Image(new FileInputStream("..\\textEditor_CSCI3033\\src\\iconsflow\\icon2.png")));
+        try
+        {
+            primaryStage.getIcons().add(new Image(new FileInputStream("..\\textEditor_CSCI3033\\src\\iconsflow\\icon2.png")));
+        }
+        catch (FileNotFoundException e)
+        {
+            primaryStage.getIcons().add(new Image(new FileInputStream(FileSystems.getDefault().getPath(".").toAbsolutePath() + "/src/iconsflow/icon2.png")));
+        }
         primaryStage.setScene(new Scene(page, 600, 600));
 
         cont.setup(); //Connects the keyboard shortcuts
