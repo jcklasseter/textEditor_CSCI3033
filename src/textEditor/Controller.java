@@ -64,16 +64,15 @@ public class Controller {
     public void compileCode(ActionEvent event){
         try
         {
-
             Tab tab = tabpane.getSelectionModel().getSelectedItem();
             String command = new String(tab.getText());
             String newCommand = new String(tab.getText().replace(".java",""));
 
-            Runtime rt = Runtime.getRuntime();
+            //Runtime rt = Runtime.getRuntime();
 
-            rt.exec("cmd /c start cmd.exe /K \" javac \"" + command);
+            //rt.exec("cmd /c start cmd.exe /K \" javac \"" + command);
 
-            rt.exec("cmd /c start cmd.exe /K \" java \"" + newCommand);
+            //rt.exec("cmd /c start cmd.exe /K \" java \"" + newCommand);
 
         }catch(Exception e){
             System.out.print("error");
@@ -327,14 +326,14 @@ public class Controller {
     {
         Tab incTab = tabpane.getSelectionModel().getSelectedItem();
         WebView myWeb = (WebView) incTab.getContent();
-        myWeb.setFontScale(1.10);
+        myWeb.setFontScale(myWeb.getFontScale() * 1.1);
     }
     
     public void decFont(ActionEvent actionEvent)
     {
        Tab decTab = tabpane.getSelectionModel().getSelectedItem();
        WebView myWeb = (WebView) decTab.getContent();
-       myWeb.setFontScale(0.90);
+       myWeb.setFontScale(myWeb.getFontScale() * 0.90);
     }
     
     public void printFile(ActionEvent actionEvent)
